@@ -1,0 +1,25 @@
+# This playbook installs the essential packages for workstation.
+---
+- name: Install essential packages and related packages
+  become: yes
+  package: pkg={{ item }} state=present
+  with_items:
+    - zsh
+    - vim
+    - git
+    - wget
+    - curl
+    - htop
+    - stow
+    - arc-theme
+    - tmux
+    - latte-dock
+    - xclip
+    - libxml2
+    - qbittorrent
+    - VirtualBox
+    - virtualbox-guest-additions
+    - kernel-devel
+    - java
+    - java-devel
+    - libselinux-python

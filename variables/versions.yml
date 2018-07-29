@@ -1,0 +1,13 @@
+# This variables file contains the version numbers of the software and distros
+# as helper variables for playbooks.
+#
+# Copyright (c) 2018 Abhiram Kuchibhotla <4kuchibh@gmail.com>
+---
+
+### Operating systems
+# Fedora - http://fedoraproject.org
+fedora_previous: 27
+fedora_current: 28
+fedora_next: 29
+# Home
+home: "{{ lookup('env','HOME') }}"

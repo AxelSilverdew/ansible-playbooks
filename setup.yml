@@ -1,0 +1,17 @@
+# This playbook contains tasks to perform on a fresh Fedora installation.
+#
+# Usage: ansible-playbook setup.yml -K
+---
+- hosts: localhost
+
+  vars_files:
+    - variables/versions.yml
+
+  tasks:
+    #- include: tasks/rpmfusion.yml
+    #- include: tasks/copr-repos.yml
+    #- include: tasks/essentials.yml
+    #- include: tasks/fonts.yml
+    #- include: tasks/php.yml
+    #- include: tasks/themes.yml
+    - include: tasks/dotfiles.yml

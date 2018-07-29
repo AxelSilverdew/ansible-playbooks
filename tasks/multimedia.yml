@@ -1,0 +1,14 @@
+# This playbook installs multimedia software and libraries.
+---
+- name: Install multimedia software and related packages
+  become: yes
+  package: pkg={{ item }} state=present
+  with_items:
+    - mpv 
+    - ffmpeg
+    - youtube-dl
+    - ImageMagick
+    - gimp
+    - krita
+    - inkscape
+    - gpick

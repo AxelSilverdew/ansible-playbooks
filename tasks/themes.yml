@@ -1,0 +1,38 @@
+# This playbook installs the essential packages for workstation.
+---
+- name: Install themes and related packages
+  become: yes
+  package: pkg={{ item }} state=present
+  with_items:
+    - arc-theme
+
+- name: Get Papirus Icon Theme Installer
+  get_url: 
+    url: https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/install.sh
+    dest: /tmp/papirus-installer.sh
+    mode: 0777
+
+- name: Run Papirus Icon Theme Installer
+  become: yes
+  shell: /tmp/papirus-installer.sh
+
+- name: Remove Papirus Icon Theme Installer
+  file: path=/tmp/papirus-installer.sh state=absent
+
+- name: Get Arc-KDE Installer
+  get_url: 
+    url: https://raw.githubusercontent.com/PapirusDevelopmentTeam/arc-kde/master/install-arc-kde-root.sh
+    dest: /tmp/arc-kde.sh
+    mode: 0777
+
+- name: Run Arc-KDE Installer
+  become: yes
+  shell: /tmp/arc-kde.sh
+
+- name: Remove Arc-KDE Installer
+  file: path=/tmp/arc-kde.sh state=absent
+
+- name: Install Dracula colorscheme for Konsole
+  get_url:
+    url: https://raw.githubusercontent.com/dracula/konsole/master/Dracula.colorscheme
+    dest: "{{ home }}/.local/share/konsole/Dracula.colorscheme"

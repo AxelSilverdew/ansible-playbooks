@@ -1,0 +1,24 @@
+# This playbook clones my dotfiles repo and installs my configurations.
+---
+- name: Create directory structure
+  file: path="{{ item }}" state=directory mode=750
+  with_items:
+  - "{{ ansible_env.HOME }}/.config"
+  - "{{ ansible_env.HOME }}/.local/bin"
+
+- name: Clone dotfiles
+  git: repo=https://github.com/AxelSilverdew/dotfiles.git dest={{ ansible_env.HOME }}/.dotfiles
+
+- name: Stow configurations
+  command: chdir={{ ansible_env.HOME }}/.dotfiles stow {{ item }}
+  with_items:
+  - emacs
+  - home
+  - mpd
+  - ncmpcpp
+  - nvim
+  - openbox
+  - themes
+  - tmux
+  - vim
+  - zsh

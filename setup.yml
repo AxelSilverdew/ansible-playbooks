@@ -9,7 +9,7 @@
 
   tasks:
     - include: tasks/rpmfusion.yml
-    #- include: tasks/copr-repos.yml
+    - include: tasks/copr-repos.yml
     #- include: tasks/essentials.yml
     #- include: tasks/fonts.yml
     #- include: tasks/php.yml

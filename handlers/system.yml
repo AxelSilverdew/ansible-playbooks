@@ -1,0 +1,21 @@
+# This files contains service handlers for Fedora.
+---
+# Control handlers for sshd
+- name: start sshd
+  service: name=sshd state=started
+
+- name: stop sshd
+  service: name=sshd state=stopped
+
+- name: restart sshd
+  service: name=sshd state=restarted
+
+# Control handlers for firewalld
+- name: start firewalld
+  service: name=firewalld state=started
+
+- name: stop firewalld
+  service: name=firewalld state=stopped
+
+- name: restart firewalld
+  service: name=firewalld state=restarted

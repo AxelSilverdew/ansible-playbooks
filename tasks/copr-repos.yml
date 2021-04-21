@@ -1,7 +1,0 @@
-# This playbook enables a few copr repos
----
-- name: Enabling heliocastro/hack-fonts
-  yum_repository:
-    name: heliocastro/hack-fonts
-    description: Hack Fonts COPR Repo
-    baseurl: https://copr.fedorainfracloud.org/coprs/heliocastro/hack-fonts/repo/fedora-{{ fedora_current }}/heliocastro-hack-fonts-fedora-{{ fedora_current }}.repo

@@ -1,0 +1,113 @@
+# Installs essential packages
+---
+- name: Upgrade all packages
+  become: yes
+  dnf:
+    name: "*"
+    state: latest
+
+- name: Install the rpmfusion repository
+  become: yes
+  dnf: 
+    name: "{{ item }}" 
+    state: present
+  loop:
+    - "http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+    - "http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+
+
+- name: Install the Neovim Nightly COPR Repo
+  become: yes
+  yum_repository:
+    name: copr-neovim-nightly
+    description: Copr repo for neovim nightly owned by agriffis
+    baseurl: https://download.copr.fedorainfracloud.org/results/agriffis/neovim-nightly/fedora-$releasever-$basearch/
+    gpgkey: https://download.copr.fedorainfracloud.org/results/agriffis/neovim-nightly/pubkey.gpg
+    skip_if_unavailable: yes
+    enabled: yes
+
+- name: Install the flathub repository
+  become: yes
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: system
+
+- name: Install Essential Packages
+  become: yes
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "@Development Tools"
+    - "@Virtualization"
+    - podman
+    - buildah
+    - zsh
+    - stow
+    - alacritty
+    - python-psutil
+    - libstdc++-devel
+    - libstdc++-static
+    - fd-find
+    - ripgrep
+    - exa
+    - neovim
+    - java
+    - java-devel
+    - mpv
+    - mpv-mpris
+    - steam
+    - chromium-freeworld
+    - ffmpeg
+    - ffmpeg-libs
+    - ImageMagick
+    - fuse-exfat
+    - exfat-utils
+    - VirtualBox
+    - sway
+    - swaylock-effects
+    - waybar
+    - wofi
+    - starship
+    - tmux
+    - mako
+    - imv
+    - zathura
+    - "@nodejs:15/default"
+
+- name: Install Essential Flatpaks
+  community.general.flatpak:
+    name: "{{ item }}"
+    state: present
+    remote: flathub
+    method: user
+  loop:
+    - com.bitwarden.desktop
+    - com.github.johnfactotum.Foliate
+    - com.github.tchx84.Flatseal
+    - com.obsproject.Studio
+    - com.slack.Slack
+    - com.spotify.Client
+    - im.riot.Riot
+    - us.zoom.Zoom
+
+- name: Download Rustup
+  get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/rustup.sh
+
+- name: Install Rustup
+  shell:
+    cmd: sh -s /tmp/rustup.sh -y
+
+- name: Install the Nightly Toolchain
+  shell:
+    cmd: ~/.cargo/bin/rustup toolchain install nightly-x86_64-unknown-linux-gnu
+
+- name: Install Common Crates
+  shell: ~/.cargo/bin/rustup run nightly cargo install {{ item }}
+  loop:
+    - rustfmt
+    - clippy

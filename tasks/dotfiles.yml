@@ -1,24 +1,119 @@
 # This playbook clones my dotfiles repo and installs my configurations.
 ---
 - name: Create directory structure
-  file: path="{{ item }}" state=directory mode=750
-  with_items:
+  file: 
+    path: "{{ item }}" 
+    state: directory 
+    mode: 750
+  loop:
   - "{{ ansible_env.HOME }}/.config"
   - "{{ ansible_env.HOME }}/.local/bin"
 
 - name: Clone dotfiles
-  git: repo=https://github.com/AxelSilverdew/dotfiles.git dest={{ ansible_env.HOME }}/.dotfiles
+  git:
+    repo: git@gitlab.com:AxelSilverdew/dotfiles.git 
+    dest: "{{ ansible_env.HOME }}/.dotfiles"
 
-- name: Stow configurations
-  command: chdir={{ ansible_env.HOME }}/.dotfiles stow {{ item }}
-  with_items:
-  - emacs
-  - home
-  - mpd
-  - ncmpcpp
-  - nvim
-  - openbox
-  - themes
-  - tmux
-  - vim
-  - zsh
+- name: Install Neovim Dotfiles
+  file:
+    src: ~/.dotfiles/nvim/.config/nvim
+    dest: ~/.config/nvim
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install Zsh Dotfiles
+  file:
+    src: ~/.dotfiles/zsh/.zshrc
+    dest: ~/.zshrc
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install Starship Dotfiles
+  file:
+    src: ~/.dotfiles/starship/.config/starship.toml
+    dest: ~/.config/starship.toml
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install Alacritty Dotfiles
+  file:
+    src: ~/.dotfiles/alacritty/.config/alacritty
+    dest: ~/.config/alacritty
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install Mako Dotfiles
+  file:
+    src: ~/.dotfiles/mako/.config/mako
+    dest: ~/.config/mako
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install mpv Dotfiles
+  file:
+    src: ~/.dotfiles/mpv/.config/mpv
+    dest: ~/.config/mpv
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install sway Dotfiles
+  file:
+    src: ~/.dotfiles/sway/.config/sway
+    dest: ~/.config/sway
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install swaylock Dotfiles
+  file:
+    src: ~/.dotfiles/swaylock/.config/swaylock
+    dest: ~/.config/swaylock
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install Themes
+  file:
+    src: ~/.dotfiles/themes/.themes
+    dest: ~/.themes
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install Fonts
+  file:
+    src: ~/.dotfiles/fonts/.fonts
+    dest: ~/.fonts
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install tmux Dotfiles
+  file:
+    src: ~/.dotfiles/tmux/.tmux.conf
+    dest: ~/.tmux.conf
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install waybar Dotfiles
+  file:
+    src: ~/.dotfiles/waybar/.config/waybar
+    dest: ~/.config/waybar
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+
+- name: Install wofi Dotfiles
+  file:
+    src: ~/.dotfiles/wofi/.config/wofi
+    dest: ~/.config/wofi
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link

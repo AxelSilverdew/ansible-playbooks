@@ -75,6 +75,7 @@
     - mako
     - imv
     - zathura
+    - tree-sitter
     - "@nodejs:15/default"
 
 - name: Install Essential Flatpaks

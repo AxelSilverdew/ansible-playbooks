@@ -9,5 +9,9 @@
 fedora_previous: 33
 fedora_current: 34
 fedora_next: 35
+
 # Home
 home: "{{ lookup('env','HOME') }}"
+
+# User
+user: abhiram
